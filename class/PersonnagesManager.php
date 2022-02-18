@@ -11,17 +11,14 @@ class PersonnagesManager
   
   public function add(Personnage $perso)
   {
-    $q = $this->db->prepare('INSERT INTO personnages(nom , type) VALUES(:nom , :type)');
+    $q = $this->db->prepare('INSERT INTO personnages(nom ) VALUES(:nom )');
     $q->bindValue(':nom', $perso->nom());
-    $q->bindValue(':type', $perso->type());
+    
     $q->execute();
     
     $perso->hydrate([
       'id' => $this->db->lastInsertId(),
       'degats' => 0,
-      'niveau' => 0,
-      'experience' => 0,
-      'strength' => 0,
     ]);
   }
   
@@ -54,7 +51,7 @@ class PersonnagesManager
   {
     if (is_int($info))
     {
-      $q = $this->db->query('SELECT id, nom, degats, niveau, experience, strength, type FROM personnages WHERE id = '.$info);
+      $q = $this->db->query('SELECT id, nom, degats type FROM personnages WHERE id = '.$info);
       $donnees = $q->fetch(PDO::FETCH_ASSOC);
 
       switch ($donnees['type'])
@@ -70,7 +67,7 @@ class PersonnagesManager
     }
     else
     {
-      $q = $this->db->prepare('SELECT id, nom, degats, niveau, experience, strength, type FROM personnages WHERE nom = :nom');
+      $q = $this->db->prepare('SELECT id, nom, degats type FROM personnages WHERE nom = :nom');
       $q->execute([':nom' => $info]);
       $donnees = $q->fetch(PDO::FETCH_ASSOC);
 
@@ -89,7 +86,7 @@ class PersonnagesManager
 
     $persos = [];
 
-    $q = $this->db->prepare('SELECT id, nom, degats, niveau, experience, strength, type FROM personnages WHERE nom <> :nom ORDER BY nom');
+    $q = $this->db->prepare('SELECT id, nom, degats type FROM personnages WHERE nom <> :nom ORDER BY nom');
     $q->execute([':nom' => $nom]);
     $donnees = $q->fetchAll(PDO::FETCH_ASSOC);
     foreach ($donnees as $donnee) {
@@ -112,14 +109,12 @@ class PersonnagesManager
       $perso->setNiveau(1);
       $perso->setStrength($perso->niveau());
     }
-    $q = $this->db->prepare('UPDATE personnages SET degats = :degats, niveau = :niveau, experience = :experience, strength = :strength WHERE id = :id');
+    $q = $this->db->prepare('UPDATE personnages SET degats = :degats WHERE id = :id');
     
 
     $q->bindValue(':degats', $perso->degats(), PDO::PARAM_INT);
     $q->bindValue(':id', $perso->id(), PDO::PARAM_INT);
-    $q->bindValue(':niveau', $perso->niveau(), PDO::PARAM_INT);
-    $q->bindValue(':experience', $perso->experience(), PDO::PARAM_INT);
-    $q->bindValue(':strength', $perso->strength(), PDO::PARAM_INT);
+    
 
     $q->execute();
   }

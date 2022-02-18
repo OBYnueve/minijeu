@@ -58,22 +58,7 @@ abstract class Personnage
     {
       return $this->nom;
     }
-  public function niveau()
-    {
-      return $this->niveau;
-    }
-  public function experience()
-    {
-      return $this->experience;
-    }
-  public function strength()
-    {
-      return $this->strength;
-    }
-  public function type()
-    {
-      return $this->type;
-    }
+  
   
   // SETTERS //
   public function setDegats($degats)
@@ -104,27 +89,7 @@ abstract class Personnage
       }
     }
 
-  public function setNiveau($niveau)
-    {
-        $this->niveau += $niveau;
-    }
-
-  public function setExperience($experience)
-    {
-        $this->experience = $experience;
-    }
-
-  public function setStrength($strength)
-    {
-
-        $this->strength = $strength;
-
-    }
-  public function setType($type)
-    {
-        $this->type = $type;
-    }
-
+  
 
 
 

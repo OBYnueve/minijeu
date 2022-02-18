@@ -44,11 +44,6 @@
         <p>
           Dégâts : <?= $perso->degats() ?>
           /
-          Niveau : <?= $perso->niveau() ?>
-          /
-          Experience : <?= $perso->experience() ?>
-          /
-          Force : <?= $perso->strength() ?>
           <br >
         </p>
       </div>
@@ -142,7 +137,7 @@ else {
 
 
   <!-- Selection personnage -->
-  <form action="" method="post">
+  <form action="combat.php" method="post">
     <p>
     Nom :  <input type="text" name="nom" maxlength="50" />
       <input type="submit" value="Utiliser ce personnage" name="utiliser" />
